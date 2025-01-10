@@ -1,28 +1,29 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 struct Node {
-    int data;
+    char *data;
     struct Node* next;
     struct Node* prev;
 };
 
 struct Node* head; // pointer to head node
 
-struct Node* GetNewNode(int x) {
+struct Node* GetNewNode(char *str) {
     /* Local variables in functions will be cleared from memory when function call finishes 
     So we will create a node in dynamic memory/heap section of memory. 
     Anything in heap is not cleared unless we explicitly free it.
     To do this, we will use malloc to reserve some memory in heap. */
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = x; // same as (*newNode).data = x;
+    newNode->data = *str; // same as (*newNode).data = *str;
     newNode->prev = NULL;
     newNode->next = NULL;
     return newNode;
 }
 
-void InsertAtHead(int x) {
-    struct Node* newNode = GetNewNode(x);
+void InsertAtHead(char *str) {
+    struct Node* newNode = GetNewNode(*str);
     if (head == NULL) {
         head = newNode;
         return;
@@ -32,8 +33,8 @@ void InsertAtHead(int x) {
     head = newNode;
 }
 
-void InsertAtTail(int x) {
-    struct Node* newNode = GetNewNode(x);
+void InsertAtTail(char *str) {
+    struct Node* newNode = GetNewNode(*str);
     if (head == NULL) {
         head = newNode;
         return;
@@ -79,6 +80,17 @@ void removeTail() {
     }
     temp->next = NULL;
     return;
+}
+
+struct Node* findNode(char *str) {
+    struct Node* temp = head;
+    while(temp->next != NULL) {
+        if (temp->data == *str) {
+            return temp;
+        }
+        temp = temp->next;
+    }
+    return NULL;
 }
 
 int main() {
