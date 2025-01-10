@@ -32,6 +32,55 @@ void InsertAtHead(int x) {
     head = newNode;
 }
 
+void InsertAtTail(int x) {
+    struct Node* newNode = GetNewNode(x);
+    if (head == NULL) {
+        head = newNode;
+        return;
+    }
+    if (head->next == NULL) {
+        head->next = newNode;
+        newNode->prev = head;
+        return;
+    }
+    struct Node* temp = head;
+    while(temp->next != NULL) {
+        temp = temp->next; // Traverse to last node/tail
+    }
+    temp->next = newNode;
+    newNode->prev = temp;
+    return;
+}
+
+void removeHead() {
+    if (head == NULL) {
+        return;
+    }
+    if (head->next == NULL) {
+        head = NULL;
+        return;
+    }
+    head = head->next;
+    head->prev = NULL;
+    return;
+}
+
+void removeTail() {
+    if (head == NULL) {
+        return;
+    }
+    if (head->next == NULL) {
+        head = NULL;
+        return;
+    }
+    struct Node* temp = head;
+    while(temp->next->next != NULL) {
+        temp = temp->next; // Traverse to second last node
+    }
+    temp->next = NULL;
+    return;
+}
+
 int main() {
     
 }
