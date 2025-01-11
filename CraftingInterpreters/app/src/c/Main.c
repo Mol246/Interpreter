@@ -83,6 +83,12 @@ void removeTail() {
 }
 
 struct Node* findNode(char *str) {
+    if (head == NULL) {
+        return;
+    }
+    if (head->data == *str) {
+        return head;
+    }
     struct Node* temp = head;
     while(temp->next != NULL) {
         if (temp->data == *str) {
@@ -91,6 +97,21 @@ struct Node* findNode(char *str) {
         temp = temp->next;
     }
     return NULL;
+}
+
+void printList() {
+    if (head == NULL) {
+        return;
+    }
+    if (head->next == NULL) {
+        printf(head->data);
+        return;
+    }
+    struct Node* temp = head;
+    while(temp->next != NULL) {
+        printf(temp->data);
+        temp = temp->next;
+    }
 }
 
 int main() {
