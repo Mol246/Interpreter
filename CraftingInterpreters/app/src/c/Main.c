@@ -16,14 +16,14 @@ struct Node* GetNewNode(char *str) {
     Anything in heap is not cleared unless we explicitly free it.
     To do this, we will use malloc to reserve some memory in heap. */
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = *str; // same as (*newNode).data = *str;
+    newNode->data = str; // same as (*newNode).data = *str;
     newNode->prev = NULL;
     newNode->next = NULL;
     return newNode;
 }
 
 void InsertAtHead(char *str) {
-    struct Node* newNode = GetNewNode(*str);
+    struct Node* newNode = GetNewNode(str);
     if (head == NULL) {
         head = newNode;
         return;
@@ -31,10 +31,11 @@ void InsertAtHead(char *str) {
     head->prev = newNode;
     newNode->next = head;
     head = newNode;
+    return;
 }
 
 void InsertAtTail(char *str) {
-    struct Node* newNode = GetNewNode(*str);
+    struct Node* newNode = GetNewNode(str);
     if (head == NULL) {
         head = newNode;
         return;
@@ -84,18 +85,22 @@ void removeTail() {
 
 struct Node* findNode(char *str) {
     if (head == NULL) {
-        return;
+        printf("DLL is Empty\n");
+        return NULL;
     }
-    if (head->data == *str) {
+    if (head->data == str) {
+        printf("Node found\n");
         return head;
     }
     struct Node* temp = head;
     while(temp->next != NULL) {
-        if (temp->data == *str) {
+        if (temp->data == str) {
+            printf("Node found\n");
             return temp;
         }
         temp = temp->next;
     }
+    printf("Node not found\n");
     return NULL;
 }
 
@@ -104,16 +109,28 @@ void printList() {
         return;
     }
     if (head->next == NULL) {
-        printf(head->data);
+        printf("%s\n", head->data);
         return;
     }
     struct Node* temp = head;
-    while(temp->next != NULL) {
+    while(temp != NULL) {
         printf(temp->data);
         temp = temp->next;
     }
+    printf("\n");
 }
 
 int main() {
-    
+    InsertAtHead("A");
+    printList();
+    InsertAtHead("B");
+    printList();
+    InsertAtTail("C");
+    printList();
+    removeHead();
+    printList();
+    removeTail();
+    printList();
+    findNode("A");
+    findNode("B");
 }
